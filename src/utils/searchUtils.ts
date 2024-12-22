@@ -4,10 +4,12 @@ import { damageTypes } from '../data/game/basics';
 import { atlasBasicsData, atlasTreeData } from '../data/game/progression';
 
 export interface SearchResult {
+  id: string;
   title: string;
   content: string;
-  category: string;
   path: string;
+  category: string;
+  lastUpdated: string;
 }
 
 export const searchAllContent = (query: string): SearchResult[] => {
@@ -21,10 +23,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
     if (classInfo.name.toLowerCase().includes(normalizedQuery) || 
         classInfo.description.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: classInfo.id,
         title: classInfo.name,
         content: classInfo.description,
+        path: '/classes',
         category: '職業',
-        path: '/classes'
+        lastUpdated: classInfo.lastUpdated
       });
     }
   });
@@ -34,10 +38,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
     if (skill.name.toLowerCase().includes(normalizedQuery) || 
         skill.description.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: skill.id,
         title: skill.name,
         content: skill.description,
+        path: '/skills',
         category: '技能',
-        path: '/skills'
+        lastUpdated: skill.lastUpdated
       });
     }
   });
@@ -47,10 +53,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
     if (damageType.name.toLowerCase().includes(normalizedQuery) || 
         damageType.description.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: damageType.id,
         title: damageType.name,
         content: damageType.description,
+        path: '/basics',
         category: '傷害類型',
-        path: '/basics'
+        lastUpdated: damageType.lastUpdated
       });
     }
   });
@@ -60,10 +68,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
     if (translation.english.toLowerCase().includes(normalizedQuery) || 
         translation.chinese.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: translation.id,
         title: `${translation.english} - ${translation.chinese}`,
         content: translation.notes || '',
+        path: '/translation',
         category: translation.category,
-        path: '/translation'
+        lastUpdated: translation.lastUpdated
       });
     }
   });
@@ -73,10 +83,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
   atlasBasicsData.basicRules.rules.forEach(rule => {
     if (rule.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: 'atlas-basics-rules',
         title: '輿圖基礎規則',
         content: rule,
+        path: '/atlas-basics',
         category: '輿圖系統',
-        path: '/atlas-basics'
+        lastUpdated: atlasBasicsData.lastUpdated
       });
     }
   });
@@ -86,10 +98,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
     if (mechanic.name.toLowerCase().includes(normalizedQuery) || 
         mechanic.description.toLowerCase().includes(normalizedQuery)) {
       results.push({
+        id: mechanic.id,
         title: mechanic.name,
         content: mechanic.description,
+        path: '/atlas-basics',
         category: '輿圖機制',
-        path: '/atlas-basics'
+        lastUpdated: mechanic.lastUpdated
       });
     }
   });
@@ -97,10 +111,12 @@ export const searchAllContent = (query: string): SearchResult[] => {
   // 搜尋輿圖天賦
   if (atlasTreeData.introduction.description.toLowerCase().includes(normalizedQuery)) {
     results.push({
+      id: 'atlas-tree-introduction',
       title: '輿圖天賦系統',
       content: atlasTreeData.introduction.description,
+      path: '/atlas-tree',
       category: '輿圖天賦',
-      path: '/atlas-tree'
+      lastUpdated: atlasTreeData.lastUpdated
     });
   }
 
