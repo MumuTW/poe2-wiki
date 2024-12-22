@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { storyData } from '../../../data/game/story';
-import { Story, Act, Area, Quest, QuestReward, Boss, BossPhase, BossMechanic, BossReward } from '../../../types/story';
+import { Act, Area, Quest, QuestReward, Boss, BossPhase, BossMechanic, BossReward } from '../../../types/story';
 
 interface StoryGuideProps {
   className?: string;
 }
 
-const StoryGuide: React.FC<StoryGuideProps> = () => {
-  const [selectedAct, setSelectedAct] = useState(1);
+const StoryGuide: React.FC<StoryGuideProps> = ({ className }) => {
+  const [selectedAct, setSelectedAct] = useState<number>(1);
   const [selectedTab, setSelectedTab] = useState<'overview' | 'areas' | 'quests' | 'bosses'>('overview');
 
   // 確保 campaignData 存在並且是數組
@@ -19,12 +19,8 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
   const renderOverview = () => (
     <div className="space-y-6">
       <div className="bg-gray-800 rounded-lg p-6">
-        <h2 className="text-2xl font-bold mb-4">{currentAct.title}</h2>
-        <p className="text-gray-300 mb-4">{currentAct.summary}</p>
-        <div className="flex items-center text-gray-300">
-          <span className="mr-2">建議等級:</span>
-          <span className="font-semibold">{currentAct.recommended_level.start} - {currentAct.recommended_level.end}</span>
-        </div>
+        <h3 className="text-xl font-bold mb-4">劇情概覽</h3>
+        <p className="text-gray-300">{currentAct.overview}</p>
       </div>
 
       <div className="bg-gray-800 rounded-lg p-6">
@@ -44,11 +40,6 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
         <div key={index} className="bg-gray-800 rounded-lg p-6">
           <h3 className="text-xl font-bold mb-2">{area.name}</h3>
           <p className="text-gray-300 mb-4">{area.description}</p>
-          
-          <div className="mb-4">
-            <span className="text-gray-400">區域等級: </span>
-            <span className="font-semibold">{area.level}</span>
-          </div>
 
           <div className="mb-4">
             <h4 className="font-semibold mb-2">常見怪物:</h4>
@@ -59,7 +50,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             </ul>
           </div>
 
-          {area.tips && (
+          {area.tips && area.tips.length > 0 && (
             <div>
               <h4 className="font-semibold mb-2">區域提示:</h4>
               <ul className="list-disc list-inside text-gray-300">
@@ -166,9 +157,8 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
         <div key={index} className="bg-gray-800 rounded-lg p-6">
           <h3 className="text-2xl font-bold mb-2">{boss.name}</h3>
           <div className="flex items-center mb-4">
-            <span className="text-gray-400 mr-4">位置: {boss.location}</span>
-            <span className="text-gray-400 mr-4">等級: {boss.level}</span>
-            <span className="text-gray-400">難度: {boss.difficulty}</span>
+            <img src={boss.image} alt={boss.name} className="w-16 h-16 rounded-full mr-4" />
+            <p className="text-gray-300">{boss.description}</p>
           </div>
 
           <div className="space-y-4">
@@ -183,8 +173,6 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
                     <div key={mechIdx} className="mb-2">
                       <p className="font-semibold text-gray-300">{mechanic.name}</p>
                       <p className="text-gray-400 mb-1">{mechanic.description}</p>
-                      <p className="text-gray-400">傷害類型: {mechanic.damage_type}</p>
-                      <p className="text-gray-400">應對策略: {mechanic.counter_strategy}</p>
                     </div>
                   ))}
                 </div>
@@ -226,19 +214,9 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-gray-100 mb-8">主線劇情指南</h1>
-
-      {/* 章節選擇 */}
-      <div className="mb-8">
-        <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-          <div className="text-sm text-gray-600">
-            <p>• {storyData.setting}</p>
-            <p>• 完整版本將包含 {storyData.total_acts} 章節內容</p>
-            <p>• 目前開放 {storyData.current_acts} 章節</p>
-            <p>• {storyData.estimated_time}</p>
-          </div>
-        </div>
+    <div className={`space-y-8 ${className}`}>
+      <div className="flex justify-between items-center">
+        <h2 className="text-3xl font-bold">劇情指南</h2>
 
         <div className="flex flex-wrap gap-4">
           {acts.map((act: Act) => (
@@ -249,37 +227,51 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
               }`}
               onClick={() => setSelectedAct(act.number)}
             >
-              第{act.number}章
+              Act {act.number}
             </button>
           ))}
         </div>
       </div>
 
-      {/* 標籤選擇 */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        {(['overview', 'areas', 'quests', 'bosses'] as const).map((tab) => (
-          <button
-            key={tab}
-            className={`px-4 py-2 rounded-lg font-semibold ${
-              selectedTab === tab ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'
-            }`}
-            onClick={() => setSelectedTab(tab)}
-          >
-            {tab === 'overview' && '概覽'}
-            {tab === 'areas' && '區域'}
-            {tab === 'quests' && '任務'}
-            {tab === 'bosses' && 'Boss'}
-          </button>
-        ))}
+      <div className="flex space-x-4">
+        <button
+          className={`px-4 py-2 rounded-lg font-semibold ${
+            selectedTab === 'overview' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setSelectedTab('overview')}
+        >
+          劇情概覽
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg font-semibold ${
+            selectedTab === 'areas' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setSelectedTab('areas')}
+        >
+          區域
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg font-semibold ${
+            selectedTab === 'quests' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setSelectedTab('quests')}
+        >
+          任務
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg font-semibold ${
+            selectedTab === 'bosses' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'
+          }`}
+          onClick={() => setSelectedTab('bosses')}
+        >
+          首領
+        </button>
       </div>
 
-      {/* 內容顯示 */}
-      <div className="mt-8">
-        {selectedTab === 'overview' && renderOverview()}
-        {selectedTab === 'areas' && renderAreas()}
-        {selectedTab === 'quests' && renderQuests()}
-        {selectedTab === 'bosses' && renderBosses()}
-      </div>
+      {selectedTab === 'overview' && renderOverview()}
+      {selectedTab === 'areas' && renderAreas()}
+      {selectedTab === 'quests' && renderQuests()}
+      {selectedTab === 'bosses' && renderBosses()}
     </div>
   );
 };
