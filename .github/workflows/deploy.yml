@@ -15,21 +15,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Install Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm'
       
       - name: Install dependencies
         run: |
           npm install
           npm ci
       
+      - name: Type check
+        run: npx tsc --noEmit
+      
       - name: Build
         run: npm run build
+        env:
+          CI: true
       
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          folder: dist
+          branch: gh-pages
+          clean: true
