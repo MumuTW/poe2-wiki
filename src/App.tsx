@@ -1,4 +1,6 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navigation from './components/common/Navigation';
 import Home from './components/layout/Home';
 import Entry from './components/layout/Entry';
 import Search from './components/common/Search';
@@ -11,19 +13,23 @@ import AscendancySystem from './components/game/ascendancy/AscendancySystem';
 import PassiveTree from './components/game/character/PassiveTree';
 import AtlasTree from './components/game/progression/AtlasTree';
 import AtlasBasics from './components/game/progression/AtlasBasics';
-import Navigation from './components/common/Navigation';
 import SearchBar from './components/common/SearchBar';
 import PatchNotes from './components/updates/PatchNotes';
 import StoryGuide from './components/game/story/StoryGuide';
 import SpiritSystem from './components/game/basics/SpiritSystem';
+import SearchResults from './components/common/SearchResults';
+import { SearchResult } from './utils/searchUtils';
 
 function App() {
+  const [searchResults, setSearchResults] = React.useState<SearchResult[]>([]);
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-900 text-white flex flex-col">
         <Navigation />
         <div className="container mx-auto px-4 py-4">
-          <SearchBar />
+          <SearchBar onSearch={setSearchResults} />
+          {searchResults.length > 0 && <SearchResults results={searchResults} />}
         </div>
         <main className="flex-grow container mx-auto px-4 py-6">
           <Routes>
