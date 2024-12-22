@@ -1,0 +1,311 @@
+{
+  "website": {
+    "title": {
+      "en": "PoE2DB",
+      "zh": "流亡2編年史"
+    }
+  },
+  "navigation": {
+    "early_access": {
+      "en": "Early Access",
+      "zh": "Early Access"
+    },
+    "stash_tab_sales": {
+      "en": "Stash Tab Sales",
+      "zh": "倉庫頁特賣"
+    }
+  },
+  "main_categories": {
+    "item": {
+      "en": "Item",
+      "zh": "物品"
+    },
+    "quest": {
+      "en": "Quest",
+      "zh": "任務"
+    }
+  },
+  "items": {
+    "categories": {
+      "all_gem": {
+        "en": "All Gem",
+        "zh": "全部 寶石"
+      },
+      "all_unique": {
+        "en": "All Unique",
+        "zh": "全部 傳奇"
+      }
+    },
+    "gem_types": {
+      "skill_gems": {
+        "en": "Skill Gems",
+        "zh": "技能寶石"
+      },
+      "support_gems": {
+        "en": "Support Gems",
+        "zh": "輔助寶石"
+      },
+      "spirit_gems": {
+        "en": "Spirit Gems",
+        "zh": "精神寶石"
+      }
+    },
+    "weapons": {
+      "one_handed": {
+        "en": "One Handed Weapons",
+        "zh": "單手武器"
+      },
+      "claws": {
+        "en": "Claws",
+        "zh": "爪"
+      },
+      "daggers": {
+        "en": "Daggers",
+        "zh": "匕首"
+      },
+      "wands": {
+        "en": "Wands",
+        "zh": "法杖"
+      },
+      "one_hand_swords": {
+        "en": "One Hand Swords",
+        "zh": "單手劍"
+      },
+      "one_hand_axes": {
+        "en": "One Hand Axes",
+        "zh": "單手斧"
+      },
+      "one_hand_maces": {
+        "en": "One Hand Maces",
+        "zh": "單手錘"
+      },
+      "sceptres": {
+        "en": "Sceptres",
+        "zh": "權杖"
+      },
+      "spears": {
+        "en": "Spears",
+        "zh": "長矛"
+      },
+      "flails": {
+        "en": "Flails",
+        "zh": "連枷"
+      }
+    }
+  },
+  "quest": {
+    "sections": {
+      "quest": {
+        "en": "Quest",
+        "zh": "任務"
+      },
+      "reward": {
+        "en": "Reward",
+        "zh": "獎勵"
+      },
+      "monster": {
+        "en": "Monster",
+        "zh": "怪物"
+      },
+      "passive_point": {
+        "en": "Passive Point",
+        "zh": "天賦點"
+      },
+      "keystone": {
+        "en": "Keystone",
+        "zh": "天賦樹"
+      },
+      "notable": {
+        "en": "Notable",
+        "zh": "可選天賦"
+      },
+      "passive_skill_tree": {
+        "en": "Passive Skill Tree",
+        "zh": "天賦樹"
+      }
+    },
+    "acts": {
+      "part_1": {
+        "en": "Part 1",
+        "zh": "第 1 部"
+      },
+      "act_1": {
+        "en": "Act 1",
+        "zh": "第 1 章"
+      },
+      "act_2": {
+        "en": "Act 2",
+        "zh": "第 2 章"
+      },
+      "act_3": {
+        "en": "Act 3",
+        "zh": "第 3 章"
+      },
+      "act_7": {
+        "en": "Act 7",
+        "zh": "第 7 章"
+      },
+      "act_8": {
+        "en": "Act 8",
+        "zh": "第 8 章"
+      },
+      "act_9": {
+        "en": "Act 9",
+        "zh": "第 9 章"
+      },
+      "act_10": {
+        "en": "Act 10",
+        "zh": "第 10 章"
+      }
+    }
+  },
+  "character": {
+    "ascendancy": {
+      "en": "Ascendancy",
+      "zh": "昇華職業"
+    },
+    "character": {
+      "en": "Character",
+      "zh": "角色"
+    },
+    "character_class": {
+      "en": "Character class",
+      "zh": "職業"
+    },
+    "ascendancy_classes": {
+      "en": "Ascendancy Classes",
+      "zh": "昇華職業系統"
+    }
+  },
+  "status": {
+    "running_for": {
+      "en": "Running for",
+      "zh": "已進行"
+    },
+    "usually_occur": {
+      "en": "usually occur every 3 weeks",
+      "zh": "每三周特價"
+    }
+  },
+  "equipment": {
+    "rarity": {
+      "normal": {
+        "en": "Normal",
+        "zh": "普通",
+        "color": "white"
+      },
+      "magic": {
+        "en": "Magic",
+        "zh": "魔法",
+        "color": "blue"
+      },
+      "rare": {
+        "en": "Rare",
+        "zh": "稀有",
+        "color": "yellow"
+      },
+      "unique": {
+        "en": "Unique",
+        "zh": "傳奇",
+        "color": "orange"
+      }
+    },
+    "slots": {
+      "weapon": {
+        "en": "Weapon",
+        "zh": "武器",
+        "types": [
+          {
+            "en": "One Hand Sword",
+            "zh": "單手劍"
+          },
+          {
+            "en": "Two Hand Sword",
+            "zh": "雙手劍"
+          },
+          {
+            "en": "Bow",
+            "zh": "弓"
+          },
+          {
+            "en": "Staff",
+            "zh": "法杖"
+          },
+          {
+            "en": "Wand",
+            "zh": "魔杖"
+          }
+        ]
+      },
+      "armor": {
+        "en": "Armor",
+        "zh": "護甲",
+        "types": [
+          {
+            "en": "Body Armor",
+            "zh": "胸甲"
+          },
+          {
+            "en": "Helmet",
+            "zh": "頭盔"
+          },
+          {
+            "en": "Gloves",
+            "zh": "手套"
+          },
+          {
+            "en": "Boots",
+            "zh": "鞋子"
+          }
+        ]
+      },
+      "accessories": {
+        "en": "Accessories",
+        "zh": "飾品",
+        "types": [
+          {
+            "en": "Ring",
+            "zh": "戒指"
+          },
+          {
+            "en": "Amulet",
+            "zh": "護身符"
+          },
+          {
+            "en": "Belt",
+            "zh": "腰帶"
+          }
+        ]
+      }
+    }
+  },
+  "currency": {
+    "basic": {
+      "transmutation": {
+        "en": "Orb of Transmutation",
+        "zh": "增幅石",
+        "color": "blue"
+      },
+      "alteration": {
+        "en": "Orb of Alteration",
+        "zh": "改造石",
+        "color": "blue"
+      },
+      "alchemy": {
+        "en": "Orb of Alchemy",
+        "zh": "點金石",
+        "color": "yellow"
+      },
+      "regal": {
+        "en": "Regal Orb",
+        "zh": "富豪石",
+        "color": "yellow"
+      },
+      "exalted": {
+        "en": "Exalted Orb",
+        "zh": "崇高石",
+        "color": "gold"
+      }
+    }
+  }
+}

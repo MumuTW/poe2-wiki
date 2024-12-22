@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+@layer components {
+  .nav-link {
+    @apply px-4 py-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors;
+  }
+  
+  .btn {
+    @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors;
+  }
+  
+  .card {
+    @apply bg-gray-800 p-6 rounded-lg shadow-lg;
+  }
+}
+
+/* Markdown Styles */
+.prose {
+  @apply text-gray-100;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mb-6 text-gray-100;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold mt-8 mb-4 text-gray-100;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold mt-6 mb-3 text-gray-100;
+}
+
+.prose h4 {
+  @apply text-xl font-bold mt-4 mb-2 text-gray-100;
+}
+
+.prose p {
+  @apply mb-4 text-gray-300;
+}
+
+.prose ul {
+  @apply mb-4 list-disc list-inside text-gray-300;
+}
+
+.prose ol {
+  @apply mb-4 list-decimal list-inside text-gray-300;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose a {
+  @apply text-blue-400 hover:text-blue-300 transition-colors;
+}
+
+.prose blockquote {
+  @apply pl-4 border-l-4 border-gray-600 text-gray-400 italic my-4;
+}
+
+.prose code {
+  @apply bg-gray-700 px-1.5 py-0.5 rounded text-sm text-gray-100;
+}
+
+.prose pre {
+  @apply bg-gray-800 p-4 rounded-lg overflow-x-auto mb-4;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-gray-100;
+}
+
+.prose table {
+  @apply w-full mb-4;
+}
+
+.prose th {
+  @apply bg-gray-700 text-left p-2 text-gray-100;
+}
+
+.prose td {
+  @apply border-t border-gray-700 p-2 text-gray-300;
+}
+
+.prose img {
+  @apply rounded-lg max-w-full h-auto my-4;
+}
