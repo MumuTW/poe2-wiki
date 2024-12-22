@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { attributes, defenses } from '../../../data/game/basics';
 
-interface AttributeData {
-  base: string[];
-  advanced?: string[];
-}
-
 interface Resource {
   name: string;
   description: string;
@@ -43,121 +38,84 @@ const GameBasics: React.FC = () => {
     resources: { title: '資源系統', data: [] },
     defenses: { title: '防禦機制', data: defenses },
     damage: { title: '傷害類型', data: [] },
-    npcs: { title: 'NPC系統', data: [] },
-    workbenches: { title: '工作台系統', data: [] },
-    spiritGuide: { title: '精魂系統', data: [] }
   };
 
-  const renderContent = (content: string) => {
-    return <p className="text-gray-300 mb-4">{content}</p>;
-  };
-
-  const renderList = (items: string[]) => {
-    return (
-      <ul className="space-y-2">
-        {items.map((item, idx) => (
-          <li key={idx} className="flex items-start">
-            <span className="text-blue-400 mr-2">•</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  const renderContent = (content: string) => <p className="text-gray-300 mb-4">{content}</p>;
+  const renderList = (items: string[]) => (
+    <ul className="list-disc list-inside space-y-2">
+      {items.map((item, index) => (
+        <li key={index} className="text-gray-300">{item}</li>
+      ))}
+    </ul>
+  );
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-8">遊戲基礎機制</h1>
-        
-        {/* 導航標籤 */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {Object.entries(sections).map(([key, section]) => (
-            <button
-              key={key}
-              onClick={() => setActiveSection(key)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                activeSection === key
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-800 hover:bg-gray-700'
-              }`}
-            >
-              {section.title}
-            </button>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-8">遊戲基礎</h1>
+
+      <div className="flex space-x-4 mb-8">
+        {Object.keys(sections).map((key) => (
+          <button
+            key={key}
+            className={`px-4 py-2 rounded ${activeSection === key ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+            onClick={() => setActiveSection(key)}
+          >
+            {sections[key].title}
+          </button>
+        ))}
+      </div>
+
+      {activeSection === 'attributes' && (
+        <div className="grid md:grid-cols-2 gap-6">
+          {attributesArray.map((attribute) => (
+            <div key={attribute.name} className="bg-gray-800 rounded-lg p-6">
+              <h2 className="text-2xl font-bold mb-4">{attribute.name}</h2>
+              {renderList(attribute.base)}
+              {attribute.advanced && renderList(attribute.advanced)}
+            </div>
           ))}
         </div>
+      )}
 
-        {/* 屬性系統 */}
-        {activeSection === 'attributes' && (
-          <div className="grid md:grid-cols-3 gap-6">
-            {Object.entries(attributes).map(([attr, data]) => (
-              <div key={attr} className="bg-gray-800 rounded-lg p-6">
-                <h2 className="text-2xl font-bold mb-4">
-                  {attr === 'strength' ? '力量' : attr === 'dexterity' ? '敏捷' : '智慧'}
-                </h2>
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-semibold mb-2">基礎效果</h3>
-                    {renderList(data.base)}
-                  </div>
-                  {data.advanced && (
-                    <div>
-                      <h3 className="font-semibold mb-2">進階效果</h3>
-                      {renderList(data.advanced)}
-                    </div>
-                  )}
+      {activeSection === 'resources' && (
+        <div className="grid md:grid-cols-2 gap-6">
+          {sections.resources.data.map((item) => {
+            if ('description' in item) {
+              return (
+                <div key={item.name} className="bg-gray-800 rounded-lg p-6">
+                  <h2 className="text-2xl font-bold mb-4">{item.name}</h2>
+                  {renderContent(item.description)}
+                  {item.notes && renderList(item.notes)}
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              );
+            }
+            return null;
+          })}
+        </div>
+      )}
 
-        {/* 資源系統 */}
-        {activeSection === 'resources' && (
-          <div className="grid md:grid-cols-2 gap-6">
-            {sections.resources.data.map((item) => {
-              if ('description' in item) {
-                return (
-                  <div key={item.name} className="bg-gray-800 rounded-lg p-6">
-                    <h2 className="text-2xl font-bold mb-4">{item.name}</h2>
-                    {renderContent(item.description)}
-                    {item.notes && renderList(item.notes)}
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        )}
+      {activeSection === 'defenses' && (
+        <div className="grid md:grid-cols-2 gap-6">
+          {defenses.map((defense) => {
+            if ('description' in defense && 'notes' in defense) {
+              return (
+                <div key={defense.name} className="bg-gray-800 rounded-lg p-6">
+                  <h2 className="text-2xl font-bold mb-4">{defense.name}</h2>
+                  {renderContent(defense.description)}
+                  {renderList(defense.notes)}
+                </div>
+              );
+            }
+            return null;
+          })}
+        </div>
+      )}
 
-        {/* 防禦機制 */}
-        {activeSection === 'defenses' && (
-          <div className="grid md:grid-cols-2 gap-6">
-            {defenses.map((defense) => {
-              if ('description' in defense && 'notes' in defense) {
-                return (
-                  <div key={defense.name} className="bg-gray-800 rounded-lg p-6">
-                    <h2 className="text-2xl font-bold mb-4">{defense.name}</h2>
-                    {renderContent(defense.description)}
-                    {renderList(defense.notes)}
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        )}
-
-        {/* 靈魂嚮導部分 */}
-        {activeSection === 'spiritGuide' && (
-          <div className="space-y-6">
-            <div className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-bold mb-4">精魂系統 (Spirit System)</h2>
-              {renderContent('精魂是暗黑破壞神4中的重要資源系統之一，用於啟用光環、增益效果、永久召喚物和觸發技能等持續性效果。')}
-            </div>
-          </div>
-        )}
-      </div>
+      {activeSection === 'damage' && (
+        <div className="text-gray-300">
+          <p>傷害類型的詳細信息將在此處顯示。</p>
+        </div>
+      )}
     </div>
   );
 };

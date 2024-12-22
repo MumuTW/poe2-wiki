@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { storyData } from '../../../data/game/story';
+import { Story, Act, Area, Quest, QuestReward, Boss, BossPhase, BossMechanic, BossReward } from '../../../types/story';
 
 interface StoryGuideProps {
   className?: string;
@@ -10,7 +11,9 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
   const [selectedTab, setSelectedTab] = useState<'overview' | 'areas' | 'quests' | 'bosses'>('overview');
 
   // 確保 campaignData 存在並且是數組
-  const acts = Array.isArray(storyData) ? storyData : [];
+  const acts = Object.values(storyData).filter((value): value is Act => 
+    typeof value === 'object' && value !== null && 'number' in value
+  );
   const currentAct = acts.find(act => act.number === selectedAct) || acts[0];
 
   const renderOverview = () => (
@@ -27,7 +30,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
       <div className="bg-gray-800 rounded-lg p-6">
         <h3 className="text-xl font-bold mb-4">重要提示</h3>
         <ul className="list-disc list-inside space-y-2 text-gray-300">
-          {currentAct.tips.map((tip, index) => (
+          {currentAct.tips.map((tip: string, index: number) => (
             <li key={index}>{tip}</li>
           ))}
         </ul>
@@ -37,7 +40,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
 
   const renderAreas = () => (
     <div className="space-y-6">
-      {currentAct.areas.map((area, index) => (
+      {currentAct.areas.map((area: Area, index: number) => (
         <div key={index} className="bg-gray-800 rounded-lg p-6">
           <h3 className="text-xl font-bold mb-2">{area.name}</h3>
           <p className="text-gray-300 mb-4">{area.description}</p>
@@ -50,7 +53,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
           <div className="mb-4">
             <h4 className="font-semibold mb-2">常見怪物:</h4>
             <ul className="list-disc list-inside text-gray-300">
-              {area.monsters.map((monster, idx) => (
+              {area.monsters.map((monster: string, idx: number) => (
                 <li key={idx}>{monster}</li>
               ))}
             </ul>
@@ -60,7 +63,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             <div>
               <h4 className="font-semibold mb-2">區域提示:</h4>
               <ul className="list-disc list-inside text-gray-300">
-                {area.tips.map((tip, idx) => (
+                {area.tips.map((tip: string, idx: number) => (
                   <li key={idx}>{tip}</li>
                 ))}
               </ul>
@@ -75,7 +78,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
     <div className="space-y-6">
       <div className="mb-8">
         <h3 className="text-2xl font-bold mb-4">主線任務</h3>
-        {currentAct.main_quests.map((quest, index) => (
+        {currentAct.main_quests.map((quest: Quest, index: number) => (
           <div key={index} className="bg-gray-800 rounded-lg p-6 mb-4">
             <h4 className="text-xl font-bold mb-2">{quest.name}</h4>
             <p className="text-gray-300 mb-4">{quest.description}</p>
@@ -83,7 +86,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             <div className="mb-4">
               <h5 className="font-semibold mb-2">任務目標:</h5>
               <ul className="list-disc list-inside text-gray-300">
-                {quest.objectives.map((objective, idx) => (
+                {quest.objectives.map((objective: string, idx: number) => (
                   <li key={idx}>{objective}</li>
                 ))}
               </ul>
@@ -92,7 +95,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             <div className="mb-4">
               <h5 className="font-semibold mb-2">任務獎勵:</h5>
               <ul className="list-disc list-inside text-gray-300">
-                {quest.rewards.map((reward, idx) => (
+                {quest.rewards.map((reward: QuestReward, idx: number) => (
                   <li key={idx}>
                     <span className="font-semibold">{reward.name}</span> - {reward.description}
                   </li>
@@ -104,7 +107,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
               <div>
                 <h5 className="font-semibold mb-2">任務提示:</h5>
                 <ul className="list-disc list-inside text-gray-300">
-                  {quest.tips.map((tip, idx) => (
+                  {quest.tips.map((tip: string, idx: number) => (
                     <li key={idx}>{tip}</li>
                   ))}
                 </ul>
@@ -116,7 +119,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
 
       <div>
         <h3 className="text-2xl font-bold mb-4">支線任務</h3>
-        {currentAct.side_quests.map((quest, index) => (
+        {currentAct.side_quests.map((quest: Quest, index: number) => (
           <div key={index} className="bg-gray-800 rounded-lg p-6 mb-4">
             <h4 className="text-xl font-bold mb-2">{quest.name}</h4>
             <p className="text-gray-300 mb-4">{quest.description}</p>
@@ -124,7 +127,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             <div className="mb-4">
               <h5 className="font-semibold mb-2">任務目標:</h5>
               <ul className="list-disc list-inside text-gray-300">
-                {quest.objectives.map((objective, idx) => (
+                {quest.objectives.map((objective: string, idx: number) => (
                   <li key={idx}>{objective}</li>
                 ))}
               </ul>
@@ -133,7 +136,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
             <div>
               <h5 className="font-semibold mb-2">任務獎勵:</h5>
               <ul className="list-disc list-inside text-gray-300">
-                {quest.rewards.map((reward, idx) => (
+                {quest.rewards.map((reward: QuestReward, idx: number) => (
                   <li key={idx}>
                     <span className="font-semibold">{reward.name}</span> - {reward.description}
                   </li>
@@ -145,7 +148,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
               <div>
                 <h5 className="font-semibold mb-2">任務提示:</h5>
                 <ul className="list-disc list-inside text-gray-300">
-                  {quest.tips.map((tip, idx) => (
+                  {quest.tips.map((tip: string, idx: number) => (
                     <li key={idx}>{tip}</li>
                   ))}
                 </ul>
@@ -159,7 +162,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
 
   const renderBosses = () => (
     <div className="space-y-6">
-      {currentAct.bosses.map((boss, index) => (
+      {currentAct.bosses.map((boss: Boss, index: number) => (
         <div key={index} className="bg-gray-800 rounded-lg p-6">
           <h3 className="text-2xl font-bold mb-2">{boss.name}</h3>
           <div className="flex items-center mb-4">
@@ -169,14 +172,14 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
           </div>
 
           <div className="space-y-4">
-            {boss.phases.map((phase, idx) => (
+            {boss.phases.map((phase: BossPhase, idx: number) => (
               <div key={idx} className="border-t border-gray-700 pt-4">
                 <h4 className="font-semibold mb-2">階段 {phase.phase}</h4>
                 <p className="text-gray-300 mb-4">{phase.description}</p>
 
                 <div className="mb-4">
                   <h5 className="font-semibold mb-2">技能機制:</h5>
-                  {phase.mechanics.map((mechanic, mechIdx) => (
+                  {phase.mechanics.map((mechanic: BossMechanic, mechIdx: number) => (
                     <div key={mechIdx} className="mb-2">
                       <p className="font-semibold text-gray-300">{mechanic.name}</p>
                       <p className="text-gray-400 mb-1">{mechanic.description}</p>
@@ -189,7 +192,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
                 <div>
                   <h5 className="font-semibold mb-2">戰鬥提示:</h5>
                   <ul className="list-disc list-inside text-gray-300">
-                    {phase.tips.map((tip, tipIdx) => (
+                    {phase.tips.map((tip: string, tipIdx: number) => (
                       <li key={tipIdx}>{tip}</li>
                     ))}
                   </ul>
@@ -201,7 +204,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
           <div className="mt-6">
             <h4 className="font-semibold mb-2">掉落物品:</h4>
             <ul className="list-disc list-inside text-gray-300">
-              {boss.rewards.map((reward, rewardIdx) => (
+              {boss.rewards.map((reward: BossReward, rewardIdx: number) => (
                 <li key={rewardIdx}>
                   <span className="font-semibold">{reward.item}</span> - {reward.description}
                 </li>
@@ -212,7 +215,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
           <div className="mt-4">
             <h4 className="font-semibold mb-2">準備事項:</h4>
             <ul className="list-disc list-inside text-gray-300">
-              {boss.preparation.map((prep, prepIdx) => (
+              {boss.preparation.map((prep: string, prepIdx: number) => (
                 <li key={prepIdx}>{prep}</li>
               ))}
             </ul>
@@ -238,7 +241,7 @@ const StoryGuide: React.FC<StoryGuideProps> = () => {
         </div>
 
         <div className="flex flex-wrap gap-4">
-          {storyData.map((act) => (
+          {acts.map((act: Act) => (
             <button
               key={act.number}
               className={`px-4 py-2 rounded-lg font-semibold ${
