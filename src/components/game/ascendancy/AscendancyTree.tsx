@@ -6,10 +6,10 @@ import ReactFlow, {
   Background,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import { AscendancyPath, AscendancyNode } from '../data/classesData';
+import { Ascendancy, AscendancyNode } from '../../../types/ascendancy';
 
 interface AscendancyTreeProps {
-  ascendancy: AscendancyPath;
+  ascendancy: Ascendancy;
 }
 
 const AscendancyTree: React.FC<AscendancyTreeProps> = ({ ascendancy }) => {
@@ -39,7 +39,7 @@ const AscendancyTree: React.FC<AscendancyTreeProps> = ({ ascendancy }) => {
               {node.description}
             </div>
             <div style={{ fontSize: '10px' }}>
-              {node.stats.map((stat, i) => (
+              {node.stats.map((stat: string, i: number) => (
                 <div key={i}>{stat}</div>
               ))}
             </div>

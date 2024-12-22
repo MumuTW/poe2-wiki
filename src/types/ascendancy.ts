@@ -25,6 +25,8 @@ export interface AscendancyNode {
   name: string;
   description: string;
   stats: string[];
+  isKeystone?: boolean;
+  isNotable?: boolean;
 }
 
 export interface Ascendancy {

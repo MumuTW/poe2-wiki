@@ -2,10 +2,29 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ascendancyGuide } from "../../../data/game/character";
 
-const Beginner = () => {
+interface GuideItem {
+  title: string;
+  items?: string[];
+  description?: string;
+  trials?: Array<{
+    name: string;
+    description: string;
+  }>;
+}
+
+interface GuideSection {
+  title: string;
+  content: GuideItem[];
+}
+
+interface Guides {
+  [key: string]: GuideSection;
+}
+
+const Beginner: React.FC = () => {
   const [activeTab, setActiveTab] = useState('basics');
 
-  const guides = {
+  const guides: Guides = {
     basics: {
       title: '基礎概念',
       content: [
@@ -141,7 +160,7 @@ const Beginner = () => {
 
         {/* 內容區域 */}
         <div className="grid md:grid-cols-2 gap-8">
-          {guides[activeTab].content.map((section, index) => (
+          {guides[activeTab].content.map((section: GuideItem, index: number) => (
             <div key={index} className="bg-gray-800 rounded-lg p-6">
               <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
               
@@ -151,7 +170,7 @@ const Beginner = () => {
               
               {section.items && (
                 <ul className="space-y-3">
-                  {section.items.map((item, idx) => (
+                  {section.items?.map((item: string, idx: number) => (
                     <li key={idx} className="flex items-start">
                       <span className="text-blue-400 mr-2">•</span>
                       <span>{item}</span>
@@ -162,7 +181,7 @@ const Beginner = () => {
               
               {section.trials && (
                 <div className="space-y-4">
-                  {section.trials.map((trial, idx) => (
+                  {section.trials?.map((trial: { name: string; description: string }, idx: number) => (
                     <div key={idx} className="bg-gray-700 p-4 rounded-lg">
                       <h3 className="font-semibold text-lg mb-2">{trial.name}</h3>
                       <p className="text-gray-300">{trial.description}</p>
