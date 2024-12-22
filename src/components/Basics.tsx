@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Basics = () => {
+export default function Basics() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-white mb-8">新手入門指南</h1>
@@ -77,5 +77,3 @@ const Basics = () => {
     </div>
   );
 };
-
-export default Basics;

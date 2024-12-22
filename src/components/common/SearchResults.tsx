@@ -1,28 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { SearchResult } from '../utils/searchUtils';
+import { SearchResult } from '../../utils/searchUtils';
 
 interface SearchResultsProps {
   results: SearchResult[];
-  onResultClick?: () => void;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results, onResultClick }) => {
-  const navigate = useNavigate();
-
-  const handleResultClick = (path: string) => {
-    navigate(path);
-    if (onResultClick) {
-      onResultClick();
-    }
-  };
-
+const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
   if (results.length === 0) {
-    return (
-      <div className="p-4 text-gray-400">
-        無搜尋結果
-      </div>
-    );
+    return null;
   }
 
   // 按類別分組結果
@@ -35,22 +20,18 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onResultClick })
   }, {} as Record<string, SearchResult[]>);
 
   return (
-    <div className="max-h-[80vh] overflow-y-auto">
+    <div className="space-y-8">
       {Object.entries(groupedResults).map(([category, categoryResults]) => (
-        <div key={category} className="mb-4">
-          <h3 className="text-lg font-semibold text-blue-400 px-4 py-2 bg-gray-800">
-            {category}
-          </h3>
-          <div className="divide-y divide-gray-700">
+        <div key={category} className="category-group">
+          <h3 className="text-lg font-semibold mb-4">{category}</h3>
+          <div className="space-y-4">
             {categoryResults.map((result, index) => (
-              <div
-                key={`${result.title}-${index}`}
-                className="p-4 hover:bg-gray-800 cursor-pointer transition-colors"
-                onClick={() => handleResultClick(result.path)}
-              >
-                <h4 className="text-white font-medium mb-1">{result.title}</h4>
-                <p className="text-gray-400 text-sm line-clamp-2">{result.content}</p>
-              </div>
+              <article key={`${result.path}-${index}`} className="card hover:bg-gray-700 transition-colors">
+                <a href={result.path} className="block">
+                  <h4 className="text-lg font-medium mb-2">{result.title}</h4>
+                  <p className="text-gray-300">{result.content}</p>
+                </a>
+              </article>
             ))}
           </div>
         </div>
