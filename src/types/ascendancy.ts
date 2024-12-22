@@ -16,6 +16,8 @@ export interface BaseClass {
   id: string;
   name: string;
   description: string;
+  attributes: string[];
+  ascendancies: Ascendancy[];
 }
 
 export interface AscendancyNode {
@@ -29,6 +31,7 @@ export interface Ascendancy {
   id: string;
   name: string;
   description: string;
+  imageUrl: string;
   nodes: AscendancyNode[];
 }
 

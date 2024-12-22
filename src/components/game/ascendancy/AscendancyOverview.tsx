@@ -1,49 +1,52 @@
 import React from 'react';
-import { classesData } from '../data/ascendancyData';
-import { BaseClass } from '../../../types/ascendancy';
+import { classesData } from '../../../data/ascendancyData';
+import { Ascendancy, AscendancyNode, BaseClass } from '../../../types/ascendancy';
 
 const AscendancyOverview: React.FC = () => {
-  const renderBaseClass = (baseClass: BaseClass, index: number) => {
-    return (
-      <div key={index} className="mb-12">
-        <div className="border-b-2 border-gray-200 mb-6">
-          <h2 className="text-3xl font-bold mb-2">{baseClass.name}</h2>
-          <p className="text-gray-600 mb-4">
-            {baseClass.attributes.join(" / ")}
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          {baseClass.ascendancies.map((ascendancy, ascIndex) => (
-            <div key={ascIndex} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="aspect-w-16 aspect-h-9">
-                <img
-                  src={ascendancy.imageUrl}
-                  alt={`${ascendancy.name} Ascendancy`}
-                  className="object-cover w-full h-full"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-3">{ascendancy.name}</h3>
-                <p className="text-gray-600 mb-4">{ascendancy.description}</p>
-                
-                <div>
-                  <h4 className="text-xl font-semibold mb-3">Ascendancy Nodes</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    {ascendancy.nodes.map((node, nodeIndex) => (
-                      <li key={nodeIndex} className="text-gray-700">
-                        {node.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+  const renderNode = (node: AscendancyNode) => (
+    <div key={node.id} className="bg-gray-700 p-4 rounded">
+      <h4 className="text-lg font-medium mb-2">{node.name}</h4>
+      <p className="text-gray-300 mb-3">{node.description}</p>
+      <div className="space-y-1">
+        {node.stats.map((stat, index) => (
+          <p key={index} className="text-blue-400">{stat}</p>
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
+
+  const renderAscendancy = (ascendancy: Ascendancy) => (
+    <div key={ascendancy.id} className="bg-gray-800 p-6 rounded-lg">
+      <div className="aspect-w-16 aspect-h-9 mb-4">
+        <img
+          src={ascendancy.imageUrl}
+          alt={`${ascendancy.name} Ascendancy`}
+          className="object-cover w-full h-full rounded"
+        />
+      </div>
+      <h3 className="text-xl font-semibold mb-3">{ascendancy.name}</h3>
+      <p className="text-gray-300 mb-4">{ascendancy.description}</p>
+      <div className="space-y-4">
+        {ascendancy.nodes.map(renderNode)}
+      </div>
+    </div>
+  );
+
+  const renderBaseClass = (baseClass: BaseClass) => (
+    <div key={baseClass.id} className="mb-12">
+      <div className="border-b border-gray-700 mb-6">
+        <h2 className="text-3xl font-bold mb-2">{baseClass.name}</h2>
+        <p className="text-gray-400 mb-2">
+          {baseClass.attributes.join(" / ")}
+        </p>
+        <p className="text-gray-300 mb-4">{baseClass.description}</p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {baseClass.ascendancies.map(renderAscendancy)}
+      </div>
+    </div>
+  );
 
   return (
     <div className="max-w-6xl mx-auto p-4">
@@ -59,7 +62,7 @@ const AscendancyOverview: React.FC = () => {
       </div>
 
       <div className="space-y-12">
-        {classesData.map((baseClass, index) => renderBaseClass(baseClass, index))}
+        {classesData.map(renderBaseClass)}
       </div>
 
       <div className="mt-12 bg-gray-50 p-6 rounded-lg">
