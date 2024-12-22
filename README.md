@@ -1,50 +1,74 @@
-# React + TypeScript + Vite
+# Path of Exile 2 Wiki
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一個使用 React + TypeScript + Vite 構建的非官方 Path of Exile 2 遊戲資料庫。
 
-Currently, two official plugins are available:
+## 功能特點
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 遊戲基礎知識
+- 職業和天賦樹指南
+- 任務和劇情攻略
+- 裝備和物品資料庫
+- 建築系統指南
 
-## Expanding the ESLint configuration
+## 在線訪問
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+訪問 [POE2 Wiki](https://mumutw.github.io/poe2-wiki/) 來查看網站。
 
-- Configure the top-level `parserOptions` property like this:
+## 本地開發
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### 前置要求
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Node.js 18.x 或更高版本
+- npm 9.x 或更高版本
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 安裝步驟
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. 克隆倉庫
+   ```bash
+   git clone https://github.com/MumuTW/poe2-wiki.git
+   cd poe2-wiki
+   ```
+
+2. 安裝依賴
+   ```bash
+   npm install
+   ```
+
+3. 啟動開發服務器
+   ```bash
+   npm run dev
+   ```
+
+4. 構建專案
+   ```bash
+   npm run build
+   ```
+
+## 技術棧
+
+- React 18
+- TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+
+## 貢獻
+
+歡迎提交 Pull Request 來改進這個專案！以下是貢獻步驟：
+
+1. Fork 這個倉庫
+2. 創建你的特性分支 (`git checkout -b feature/AmazingFeature`)
+3. 提交你的更改 (`git commit -m 'Add some AmazingFeature'`)
+4. 推送到分支 (`git push origin feature/AmazingFeature`)
+5. 開啟一個 Pull Request
+
+## 授權
+
+本專案採用 MIT 授權 - 查看 [LICENSE](LICENSE) 文件了解更多細節。
+
+## 聯繫方式
+
+如果你有任何問題或建議，歡迎：
+- 開啟 Issue
+- 在 Discussions 中討論
+- 通過 Pull Request 貢獻代碼
