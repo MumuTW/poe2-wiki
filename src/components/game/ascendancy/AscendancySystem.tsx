@@ -1,67 +1,52 @@
 import React from 'react';
-import { ascendancyGuide, specialNotes } from '../../../data/game/character';
+import { ascendancies } from '../../../data/game/character/ascendancyData';
 
-const AscendancySystem: React.FC = () => {
+const AscendancySystem = () => {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">{ascendancyGuide.title}</h1>
+      <h1 className="text-4xl font-bold mb-8">昇華系統</h1>
       
-      {/* 系統介紹 */}
-      <section className="mb-8">
-        <p className="text-lg mb-4">{ascendancyGuide.description}</p>
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-4 text-yellow-900">
-          <p>{ascendancyGuide.earlyAccessNote}</p>
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">系統介紹</h2>
+        <div className="bg-gray-800 rounded-lg p-6">
+          <p className="text-gray-300 mb-4">
+            昇華系統是一個強大的角色特殊化機制，讓你的角色獲得獨特的能力和玩法。
+          </p>
         </div>
       </section>
 
-      {/* 如何獲得昇華 */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">{ascendancyGuide.howToUnlock.title}</h2>
-        <p className="mb-4">{ascendancyGuide.howToUnlock.description}</p>
-        
-        <div className="grid md:grid-cols-3 gap-4">
-          {ascendancyGuide.howToUnlock.trials.map((trial) => (
-            <div key={trial.name} className="bg-gray-800 p-4 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">{trial.name}</h3>
-              <p className="text-sm mb-2">第{trial.act}章</p>
-              <p>{trial.description}</p>
-              {!trial.available && (
-                <p className="text-red-500 mt-2">（尚未實裝）</p>
-              )}
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">可用昇華職業</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {ascendancies.map((ascendancy) => (
+            <div key={ascendancy.id} className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-2xl font-bold mb-4">{ascendancy.name}</h3>
+              <p className="text-gray-300 mb-4">{ascendancy.description}</p>
+              <div className="space-y-4">
+                {ascendancy.nodes.map((node) => (
+                  <div key={node.id} className="bg-gray-700 rounded-lg p-4">
+                    <h4 className="text-xl font-bold mb-2">{node.name}</h4>
+                    <p className="text-gray-300">{node.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 解鎖進度 */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">昇華點數獲取進度</h2>
-        <div className="space-y-4">
-          {ascendancyGuide.unlockProgress.map((progress) => (
-            <div key={progress.stage} className="bg-gray-800 p-4 rounded-lg">
-              <h3 className="text-xl font-semibold mb-2">
-                第{progress.stage}階段（{progress.points.join('&')}點）
-              </h3>
-              <p className="mb-2">要求：{progress.requirement}</p>
-              <p>{progress.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 特殊提示 */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">重要提示</h2>
-        <div className="bg-blue-900 bg-opacity-50 p-4 rounded-lg mb-4">
-          <p>{specialNotes.skipAct2Trial}</p>
-        </div>
-        
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <h3 className="text-xl font-semibold mb-2">終局遊戲鑰匙獲取</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>{specialNotes.endgameKeys.level60}</li>
-            <li>{specialNotes.endgameKeys.level75}</li>
-          </ul>
+      <section>
+        <h2 className="text-3xl font-bold mb-6">遊玩建議</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-gray-800 rounded-lg p-6">
+            <p className="text-gray-300">優先完成所有試煉，解鎖更多昇華點數。</p>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-6">
+            <p className="text-gray-300">仔細規劃昇華路線，選擇適合你的構建。</p>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-6">
+            <p className="text-gray-300">配合主天賦樹做選擇，發揮最大效果。</p>
+          </div>
         </div>
       </section>
     </div>

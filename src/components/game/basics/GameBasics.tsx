@@ -1,121 +1,42 @@
-import React, { useState } from 'react';
-import { attributes, defenses } from '../../../data/game/basics';
+import React from 'react';
+import { damageTypes } from '../../../data/game/basics';
 
-interface Resource {
-  name: string;
-  description: string;
-  notes?: string[];
-}
-
-interface Defense {
-  name: string;
-  description: string;
-  notes: string[];
-}
-
-interface DisplayAttribute {
-  name: string;
-  base: string[];
-  advanced?: string[];
-}
-
-interface Section {
-  title: string;
-  data: Array<DisplayAttribute | Resource | Defense>;
-}
-
-const GameBasics: React.FC = () => {
-  // Transform attributes object into array format
-  const attributesArray = Object.entries(attributes).map(([key, value]) => ({
-    name: key === 'strength' ? '力量' : key === 'dexterity' ? '敏捷' : '智慧',
-    base: value.base,
-    advanced: value.advanced
-  }));
-  const [activeSection, setActiveSection] = useState('attributes');
-
-  const sections: Record<string, Section> = {
-    attributes: { title: '屬性系統', data: attributesArray },
-    resources: { title: '資源系統', data: [] },
-    defenses: { title: '防禦機制', data: defenses },
-    damage: { title: '傷害類型', data: [] },
-  };
-
-  const renderContent = (content: string) => <p className="text-gray-300 mb-4">{content}</p>;
-  const renderList = (items: string[]) => (
-    <ul className="list-disc list-inside space-y-2">
-      {items.map((item, index) => (
-        <li key={index} className="text-gray-300">{item}</li>
-      ))}
-    </ul>
-  );
-
+const GameBasics = () => {
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-8">遊戲基礎</h1>
-
-      <div className="flex space-x-4 mb-8">
-        {Object.keys(sections).map((key) => (
-          <button
-            key={key}
-            className={`px-4 py-2 rounded ${activeSection === key ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
-            onClick={() => setActiveSection(key)}
-          >
-            {sections[key].title}
-          </button>
-        ))}
-      </div>
-
-      {activeSection === 'attributes' && (
-        <div className="grid md:grid-cols-2 gap-6">
-          {attributesArray.map((attribute) => (
-            <div key={attribute.name} className="bg-gray-800 rounded-lg p-6">
-              <h2 className="text-2xl font-bold mb-4">{attribute.name}</h2>
-              {renderList(attribute.base)}
-              {attribute.advanced && renderList(attribute.advanced)}
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold mb-8">遊戲基礎機制</h1>
+      
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">傷害類型</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {damageTypes.map((type) => (
+            <div key={type.id} className="bg-gray-800 rounded-lg p-6">
+              <h3 className="text-2xl font-bold mb-4">{type.name}</h3>
+              <p className="text-gray-300">{type.description}</p>
             </div>
           ))}
         </div>
-      )}
+      </section>
 
-      {activeSection === 'resources' && (
+      <section className="mb-12">
+        <h2 className="text-3xl font-bold mb-6">基礎概念</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {sections.resources.data.map((item) => {
-            if ('description' in item) {
-              return (
-                <div key={item.name} className="bg-gray-800 rounded-lg p-6">
-                  <h2 className="text-2xl font-bold mb-4">{item.name}</h2>
-                  {renderContent(item.description)}
-                  {item.notes && renderList(item.notes)}
-                </div>
-              );
-            }
-            return null;
-          })}
+          <div className="bg-gray-800 rounded-lg p-6">
+            <h3 className="text-2xl font-bold mb-4">生命與魔力</h3>
+            <p className="text-gray-300">
+              生命值（Life）是你的主要生存資源，當生命值降至零時角色會死亡。
+              魔力值（Mana）用於施放技能，需要合理管理以維持持續輸出。
+            </p>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-6">
+            <h3 className="text-2xl font-bold mb-4">抗性系統</h3>
+            <p className="text-gray-300">
+              遊戲中有多種抗性：火焰、冰冷、閃電和混沌。
+              保持抗性上限對於生存至關重要。
+            </p>
+          </div>
         </div>
-      )}
-
-      {activeSection === 'defenses' && (
-        <div className="grid md:grid-cols-2 gap-6">
-          {defenses.map((defense) => {
-            if ('description' in defense && 'notes' in defense) {
-              return (
-                <div key={defense.name} className="bg-gray-800 rounded-lg p-6">
-                  <h2 className="text-2xl font-bold mb-4">{defense.name}</h2>
-                  {renderContent(defense.description)}
-                  {renderList(defense.notes)}
-                </div>
-              );
-            }
-            return null;
-          })}
-        </div>
-      )}
-
-      {activeSection === 'damage' && (
-        <div className="text-gray-300">
-          <p>傷害類型的詳細信息將在此處顯示。</p>
-        </div>
-      )}
+      </section>
     </div>
   );
 };
